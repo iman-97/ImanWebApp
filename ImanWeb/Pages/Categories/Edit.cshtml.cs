@@ -5,33 +5,22 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ImanWeb.Pages.Categories;
 
-//[BindProperties] if we have more than 1 property to bind we can use this
-public class CreateModel : PageModel
+public class EditModel : PageModel
 {
     [BindProperty]
     public Category Category { get; set; }
 
     private readonly ApplicationDbContext _dbContext;
 
-    public CreateModel(ApplicationDbContext dbContext)
+    public EditModel(ApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
-    public void OnGet()
+    public void OnGet(int id)
     {
+        Category = _dbContext.Category.Find(id);
     }
-
-    //Without BindProperty attribute
-
-    //public async Task<IActionResult> OnPost(Category category)
-    //{
-    //    await _dbContext.AddAsync(category);
-    //    await _dbContext.SaveChangesAsync();
-    //    return RedirectToPage("Index");
-    //}
-
-    //With BindProperty attribute
 
     public async Task<IActionResult> OnPost()
     {
@@ -41,9 +30,9 @@ public class CreateModel : PageModel
         if (ModelState.IsValid == false)
             return Page();
 
-        await _dbContext.AddAsync(Category);
+        _dbContext.Update(Category);
         await _dbContext.SaveChangesAsync();
-        TempData["success"] = "Category created successfully";
+        TempData["success"] = "Category updated successfully";
         return RedirectToPage("Index");
     }
 
