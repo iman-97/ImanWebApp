@@ -1,9 +1,9 @@
-using ImanWeb.Data;
-using ImanWeb.Model;
+using ImanWebApp.DataAccess.Data;
+using ImanWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ImanWeb.Pages.Categories;
+namespace ImanWeb.Pages.Admin.Categories;
 
 public class DeleteModel : PageModel
 {
@@ -29,7 +29,7 @@ public class DeleteModel : PageModel
         if (categoryFromDb == null)
             return Page();
 
-        _dbContext.Remove(categoryFromDb);
+        _dbContext.Category.Remove(categoryFromDb);
         await _dbContext.SaveChangesAsync();
         TempData["success"] = "Category deleted successfully";
         return RedirectToPage("Index");

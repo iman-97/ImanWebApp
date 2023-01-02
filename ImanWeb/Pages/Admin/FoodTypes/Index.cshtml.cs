@@ -1,13 +1,12 @@
-using ImanWeb.Data;
-using ImanWeb.Model;
-using Microsoft.AspNetCore.Mvc;
+using ImanWebApp.DataAccess.Data;
+using ImanWebApp.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ImanWeb.Pages.Categories
+namespace ImanWeb.Pages.Admin.FoodTypes
 {
     public class IndexModel : PageModel
     {
-        public IEnumerable<Category> Categories { get; set; }
+        public IEnumerable<FoodType> FoodTypes { get; set; }
 
         private readonly ApplicationDbContext _db;
 
@@ -18,7 +17,7 @@ namespace ImanWeb.Pages.Categories
 
         public void OnGet()
         {
-            Categories = _db.Category;
+            FoodTypes = _db.FoodType;
         }
 
     }

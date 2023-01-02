@@ -1,4 +1,4 @@
-using ImanWeb.Data;
+using ImanWebApp.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

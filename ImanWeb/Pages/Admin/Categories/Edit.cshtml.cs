@@ -1,9 +1,9 @@
-using ImanWeb.Data;
-using ImanWeb.Model;
+using ImanWebApp.DataAccess.Data;
+using ImanWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ImanWeb.Pages.Categories;
+namespace ImanWeb.Pages.Admin.Categories;
 
 public class EditModel : PageModel
 {

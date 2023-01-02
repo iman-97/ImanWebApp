@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace ImanWeb.Migrations
+namespace ImanWebApp.DataAccess.Migrations
 {
     public partial class AddCategoryToDb : Migration
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ImanWeb.Model;
+namespace ImanWebApp.Models;
 
 public class Category
 {

@@ -1,7 +1,7 @@
-﻿using ImanWeb.Model;
+﻿using ImanWebApp.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ImanWeb.Data;
+namespace ImanWebApp.DataAccess.Data;
 
 public class ApplicationDbContext : DbContext
 {
@@ -10,4 +10,5 @@ public class ApplicationDbContext : DbContext
 	}
 
     public DbSet<Category> Category { get; set; }
+	public DbSet<FoodType> FoodType { get; set; }
 }
