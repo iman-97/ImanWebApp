@@ -1,4 +1,5 @@
 using ImanWebApp.DataAccess.Data;
+using ImanWebApp.DataAccess.Repositiory.IRepository;
 using ImanWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,15 +12,11 @@ public class CreateModel : PageModel
     [BindProperty]
     public Category Category { get; set; }
 
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateModel(ApplicationDbContext dbContext)
+    public CreateModel(IUnitOfWork unitOfWork)
     {
-        _dbContext = dbContext;
-    }
-
-    public void OnGet()
-    {
+        _unitOfWork = unitOfWork;
     }
 
     //Without BindProperty attribute
@@ -41,8 +38,8 @@ public class CreateModel : PageModel
         if (ModelState.IsValid == false)
             return Page();
 
-        await _dbContext.Category.AddAsync(Category);
-        await _dbContext.SaveChangesAsync();
+        _unitOfWork.Category.Add(Category);
+        _unitOfWork.Save();
         TempData["success"] = "Category created successfully";
         return RedirectToPage("Index");
     }

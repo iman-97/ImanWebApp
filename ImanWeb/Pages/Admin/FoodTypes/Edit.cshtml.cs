@@ -1,4 +1,4 @@
-using ImanWebApp.DataAccess.Data;
+using ImanWebApp.DataAccess.Repositiory.IRepository;
 using ImanWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,16 +10,16 @@ public class EditModel : PageModel
     [BindProperty]
     public FoodType FoodType { get; set; }
 
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public EditModel(ApplicationDbContext dbContext)
+    public EditModel(IUnitOfWork unitOfWork)
     {
-        _dbContext = dbContext;
+        _unitOfWork = unitOfWork;
     }
 
     public void OnGet(int id)
     {
-        FoodType = _dbContext.FoodType.Find(id);
+        FoodType = _unitOfWork.FoodType.GetFirstOrDefault(u => u.Id == id);
     }
 
     public async Task<IActionResult> OnPost()
@@ -27,8 +27,8 @@ public class EditModel : PageModel
         if (ModelState.IsValid == false)
             return Page();
 
-        _dbContext.Update(FoodType);
-        await _dbContext.SaveChangesAsync();
+        _unitOfWork.FoodType.Update(FoodType);
+        _unitOfWork.Save();
         TempData["success"] = "FoodType updated successfully";
         return RedirectToPage("Index");
     }

@@ -1,4 +1,4 @@
-using ImanWebApp.DataAccess.Data;
+using ImanWebApp.DataAccess.Repositiory.IRepository;
 using ImanWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,15 +10,11 @@ public class CreateModel : PageModel
     [BindProperty]
     public FoodType FoodType { get; set; }
 
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateModel(ApplicationDbContext dbContext)
+    public CreateModel(IUnitOfWork unitOfWork)
     {
-        _dbContext = dbContext;
-    }
-
-    public void OnGet()
-    {
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<IActionResult> OnPost()
@@ -26,8 +22,8 @@ public class CreateModel : PageModel
         if (ModelState.IsValid == false)
             return Page();
 
-        await _dbContext.FoodType.AddAsync(FoodType);
-        await _dbContext.SaveChangesAsync();
+        _unitOfWork.FoodType.Add(FoodType);
+        _unitOfWork.Save();
         TempData["success"] = "FoodType created successfully";
         return RedirectToPage("Index");
     }

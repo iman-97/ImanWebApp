@@ -1,4 +1,4 @@
-using ImanWebApp.DataAccess.Data;
+using ImanWebApp.DataAccess.Repositiory.IRepository;
 using ImanWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,27 +10,27 @@ public class DeleteModel : PageModel
     [BindProperty]
     public FoodType FoodType { get; set; }
 
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteModel(ApplicationDbContext dbContext)
+    public DeleteModel(IUnitOfWork unitOfWork)
     {
-        _dbContext = dbContext;
+        _unitOfWork = unitOfWork;
     }
 
     public void OnGet(int id)
     {
-        FoodType = _dbContext.FoodType.Find(id);
+        FoodType = _unitOfWork.FoodType.GetFirstOrDefault(u => u.Id == id);
     }
 
     public async Task<IActionResult> OnPost()
     {
-        var foodTypeFromDb = _dbContext.FoodType.Find(FoodType.Id);
+        var foodTypeFromDb = _unitOfWork.FoodType.GetFirstOrDefault(u => u.Id == FoodType.Id);
 
         if (foodTypeFromDb == null)
             return Page();
 
-        _dbContext.FoodType.Remove(foodTypeFromDb);
-        await _dbContext.SaveChangesAsync();
+        _unitOfWork.FoodType.Remove(foodTypeFromDb);
+        _unitOfWork.Save();
         TempData["success"] = "FoodType deleted successfully";
         return RedirectToPage("Index");
     }

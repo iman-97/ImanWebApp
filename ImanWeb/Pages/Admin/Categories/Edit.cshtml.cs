@@ -1,4 +1,5 @@
 using ImanWebApp.DataAccess.Data;
+using ImanWebApp.DataAccess.Repositiory.IRepository;
 using ImanWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,16 +11,16 @@ public class EditModel : PageModel
     [BindProperty]
     public Category Category { get; set; }
 
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public EditModel(ApplicationDbContext dbContext)
+    public EditModel(IUnitOfWork unitOfWork)
     {
-        _dbContext = dbContext;
+        _unitOfWork = unitOfWork;
     }
 
     public void OnGet(int id)
     {
-        Category = _dbContext.Category.Find(id);
+        Category = _unitOfWork.Category.GetFirstOrDefault(u => u.Id == id);
     }
 
     public async Task<IActionResult> OnPost()
@@ -30,8 +31,8 @@ public class EditModel : PageModel
         if (ModelState.IsValid == false)
             return Page();
 
-        _dbContext.Update(Category);
-        await _dbContext.SaveChangesAsync();
+        _unitOfWork.Category.Update(Category);
+        _unitOfWork.Save();
         TempData["success"] = "Category updated successfully";
         return RedirectToPage("Index");
     }
