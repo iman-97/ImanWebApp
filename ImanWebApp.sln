@@ -5,11 +5,11 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImanWeb", "ImanWeb\ImanWeb.csproj", "{1A1E58B0-6C9D-4C64-9388-37D035767275}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImanWebApp.DataAccess", "ImanWeb.DataAccess\ImanWebApp.DataAccess.csproj", "{171C10EB-84B7-468F-8209-C55DED24141B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImanWebApp.DataAccess", "ImanWeb.DataAccess\ImanWebApp.DataAccess.csproj", "{171C10EB-84B7-468F-8209-C55DED24141B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImanWebApp.Models", "ImanWebApp.Models\ImanWebApp.Models.csproj", "{C429B2EB-3AE0-4D9B-B995-8F39DB648610}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImanWebApp.Models", "ImanWebApp.Models\ImanWebApp.Models.csproj", "{C429B2EB-3AE0-4D9B-B995-8F39DB648610}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImanWebApp.Utility", "ImanWebApp.Utility\ImanWebApp.Utility.csproj", "{C807EAC7-75E7-45C9-88D0-69633775564B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImanWebApp.Utility", "ImanWebApp.Utility\ImanWebApp.Utility.csproj", "{C807EAC7-75E7-45C9-88D0-69633775564B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
