@@ -23,8 +23,14 @@ public class UpsertModel : PageModel
         MenuItem = new();
     }
 
-    public void OnGet()
+    public void OnGet(int? id)
     {
+        if(id != null)
+        {
+            //Edit
+            MenuItem = _unitOfWork.MenuItem.GetFirstOrDefault(u => u.Id == id);
+        }
+
         CategoryList = _unitOfWork.Category.GetAll().Select(i => new SelectListItem()
         {
             Text = i.Name,
@@ -40,9 +46,6 @@ public class UpsertModel : PageModel
 
     public async Task<IActionResult> OnPost()
     {
-        if (ModelState.IsValid == false)
-            return Page();
-
         var webRootPath = _hostEnvironment.WebRootPath; //wwwroot path
         var files = HttpContext.Request.Form.Files; //getting the uploaded image
 
@@ -65,6 +68,35 @@ public class UpsertModel : PageModel
         else
         {
             //edit
+            var objFromDb = _unitOfWork.MenuItem.GetFirstOrDefault(i => i.Id == MenuItem.Id);
+
+            if (files.Count > 0)
+            {
+                //a new image uploaded
+                var fileName_new = Guid.NewGuid().ToString();
+                var uploads = Path.Combine(webRootPath, @"images\menuItems");
+                var extention = Path.GetExtension(files[0].FileName);
+
+                //delete the old image
+                var oldImagePath = Path.Combine(webRootPath, objFromDb.ImageUrl.TrimStart('\\'));
+
+                if (System.IO.File.Exists(oldImagePath) == true)
+                    System.IO.File.Delete(oldImagePath);
+
+                using (var fileStream = new FileStream(Path.Combine(uploads, fileName_new + extention), FileMode.Create))
+                {
+                    files[0].CopyTo(fileStream);
+                }
+
+                MenuItem.ImageUrl = @"\images\menuItems\" + fileName_new + extention;
+            }
+            else
+            {
+                MenuItem.ImageUrl = objFromDb.ImageUrl;
+            }
+
+            _unitOfWork.MenuItem.Update(MenuItem);
+            _unitOfWork.Save();
         }
 
         return RedirectToPage("./Index");
