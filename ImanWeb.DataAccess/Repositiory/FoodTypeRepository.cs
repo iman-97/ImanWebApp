@@ -6,9 +6,9 @@ namespace ImanWebApp.DataAccess.Repositiory
 {
 	public class FoodTypeRepository : Repository<FoodType>, IFoodTypeRepository
 	{
-		private readonly ApplicationDbContext _db;
+		private readonly MyApplicationDbContext _db;
 
-		public FoodTypeRepository(ApplicationDbContext db) : base(db)
+		public FoodTypeRepository(MyApplicationDbContext db) : base(db)
 		{
 			_db = db;
 		}

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ImanWebApp.DataAccess.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(MyApplicationDbContext))]
     [Migration("20230102164019_AddItemMenuToDb")]
     partial class AddItemMenuToDb
     {

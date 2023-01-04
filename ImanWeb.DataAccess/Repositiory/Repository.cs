@@ -12,10 +12,10 @@ namespace ImanWebApp.DataAccess.Repositiory;
 
 public class Repository<T> : IRepository<T> where T : class 
 {
-    private readonly ApplicationDbContext _db;
+    private readonly MyApplicationDbContext _db;
     internal DbSet<T> dbSet;
 
-    public Repository(ApplicationDbContext db)
+    public Repository(MyApplicationDbContext db)
     {
         _db = db;
         dbSet = db.Set<T>();

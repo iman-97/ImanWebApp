@@ -5,9 +5,9 @@ namespace ImanWebApp.DataAccess.Repositiory;
 
 public class UnitOfWork : IUnitOfWork
 {
-	private readonly ApplicationDbContext _db;
+	private readonly MyApplicationDbContext _db;
 
-	public UnitOfWork(ApplicationDbContext db)
+	public UnitOfWork(MyApplicationDbContext db)
 	{
 		_db = db;
 		Category = new CategoryRepository(_db);
